@@ -9,19 +9,18 @@ export async function loader() {
 
 const Users = () => {
     const { data } = useLoaderData();
-
     console.log("Data?", data);
-
     return (
         <>
             <h2>USERS</h2>
             <p>Here's them peeps, 'cause HIPPA ain't got no jurisdiction around these parts:</p>
             <ul>
-                {data.map((users, index) => {
+                {data.map((user, index) => {
+                    console.log(user)
                     return (
                         <li key={index}>
-                            <Link to={users.id}>
-                                {users.username}
+                            <Link to={`${user.id}`}>
+                                {user.username}
                             </Link>
                         </li>
                     );

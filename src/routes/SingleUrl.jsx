@@ -1,17 +1,27 @@
 import { useLoaderData } from "react-router-dom";
 
 export async function loader({params}) {
-    const {slug} = params;
+    const {id} = params;
 
-    const response = await fetch(`http://localhost:8000/ceos/${slug}`);
+    const response = await fetch(`http://localhost:8000/urls/${id}`);
     const data = await response.json();
     return {data}
 }
 
-const SingleCeo = () => {
+const SingleUrl = () => {
     const { data } = useLoaderData();
 
-    return <p>{data.name} was CEO of Apple Computer in {data.year}</p>
+    return (
+        <>
+            <h1>URL INFO</h1>
+            <p>ORIGINAL URL: {data.long_url}</p>
+            <p>SHRINKIFIED INTO: {data.short_url}</p>
+            <br></br>
+            <p>SUBMITTED BY: {data.user_id}</p>
+            <p>CREATED ON: {data.creation_date}</p>
+
+        </>
+    )
 };
 
-export default SingleCeo;
+export default SingleUrl;

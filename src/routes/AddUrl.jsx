@@ -1,54 +1,51 @@
 import { Form, redirect } from 'react-router-dom';
-import slugify from 'slugify';
 
 export async function action({request}) {
     const formData = await request.formData();
-    const ceoName = formData.get('ceoName');
-    const ceoYear = formData.get('ceoYear');
-    const slug = slugify(
-        ceoName, {
-            replacement: '_',
-            lower: true,
-            strict: true,
-        }
-    )
+    const long_url = formData.get('long_url');
+    const title = formData.get('title');
 
-    const data = { name: ceoName, slug, year: Number(ceoYear) };
+    const data = { long_url: long_url, title: title };
 
-    const addCeo = await fetch('http://localhost:8000/ceos/add', {
+    const addUrl = await fetch('http://localhost:8000/urls/add', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
         },
         body: JSON.stringify(data)
     }).then(response => response.json());
-    console.log('ADD CEO RESPONSE:', addCeo);
-    return redirect('/ceos')
+    console.log('URL SHRINKIFIED:', addUrl);
+    return redirect('/')
 }
 
-const AddCeo = () => {
+const AddUrl = () => {
     return (
-        <Form method='post'>
-            <label>
-                CEO Name 
-                <input 
-                    type="text" 
-                    name="ceoName" 
-                />
-            </label>
-            <label>
-                Year Served
-                <input
-                    name="ceoYear"
-                    type="number"
-                    min="1950"
-                    max="2099"
-                    step="1"
-                />
-            </label>
-            <button type="submit">Add CEO</button>
-        </Form>
+        <>
+            <Form method='post'>
+                <label>
+                    URL to Shrink 
+                    <input 
+                        name="long_url" 
+                        type="url" 
+                    />
+                </label>
+                <label>
+                    Title(Optional)
+                    <input
+                        name="title"
+                        type="text"
+                    />
+                </label>
+                <button type="submit">SHRINKIFY!</button>
+            </Form>
+            <Form>
+                <label>
+                    New URL!
+                    <input></input>
+                </label>
+            </Form>
+        </>
     );
 };
 
-export default AddCeo;
+export default AddUrl;

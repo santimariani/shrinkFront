@@ -7,7 +7,7 @@ export async function action({request}) {
 
     const data = { username: userName, hashed_password: userPassword };
 
-    const addUser = await fetch('http://localhost:8000/users/add', {
+    const addUser = await fetch('http://localhost:8000/users/login', {
         method: 'POST',
         headers: {
             'Content-Type': 'application/json'
@@ -18,7 +18,7 @@ export async function action({request}) {
     return redirect('/')
 }
 
-const AddUser = () => {
+const LogIn = () => {
     return (
         <Form method='post'>
             <label>
@@ -35,9 +35,9 @@ const AddUser = () => {
                     type="password"
                 />
             </label>
-            <button type="submit">ADD USER</button>
+            <button type="submit">LOG IN</button>
         </Form>
     );
 };
 
-export default AddUser;
+export default LogIn;
